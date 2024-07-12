@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -114,7 +115,7 @@ public class PhaseCreatingPalette extends PhaseBase implements IDrawBlockHighlig
 
 	protected void notifyChange() {
 		getModel().updatePalettePreview();
-		minecraft.player.displayClientMessage(Component.literal("Updating Preview..."), true);
+		minecraft.player.displayClientMessage(new TextComponent("Updating Preview..."), true);
 		MightyClient.renderer.update();
 	}
 

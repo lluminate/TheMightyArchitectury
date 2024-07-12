@@ -6,7 +6,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import com.timmie.mightyarchitect.foundation.utility.ColorHelper;
 import com.timmie.mightyarchitect.foundation.utility.VecHelper;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -139,9 +139,9 @@ public class GuiGameElement {
 			matrixStack.scale(1, -1, 1);
 			matrixStack.translate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
 
-			matrixStack.mulPose(Axis.ZP.rotationDegrees((float) zRot));
-			matrixStack.mulPose(Axis.XP.rotationDegrees((float) xRot));
-			matrixStack.mulPose(Axis.YP.rotationDegrees((float) yRot));
+			matrixStack.mulPose(Vector3f.ZP.rotationDegrees((float) zRot));
+			matrixStack.mulPose(Vector3f.XP.rotationDegrees((float) xRot));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) yRot));
 			matrixStack.translate(-rotationOffset.x, -rotationOffset.y, -rotationOffset.z);
 		}
 
@@ -267,7 +267,7 @@ public class GuiGameElement {
 				Lighting.setupForFlatItems();
 			}
 
-			renderer.render(stack, ItemDisplayContext.GUI, false, matrixStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, bakedModel);
+			renderer.render(stack, ItemTransforms.TransformType.GUI, false, matrixStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, bakedModel);
 			buffer.endBatch();
 			RenderSystem.enableDepthTest();
 			if (useDefaultLighting && flatLighting) {

@@ -19,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
@@ -112,7 +113,7 @@ public class DesignExporter {
 
 					if (block == null && blockState.getBlock() != Blocks.AIR) {
 						Minecraft.getInstance().player.displayClientMessage(
-							Component.literal(blockState.getBlock()
+							new TextComponent(blockState.getBlock()
 							.getDescriptionId() + " @" + pos.getX() + "," + pos.getY() + "," + pos.getZ()
 							+ " does not belong to the Scanner Palette"), false);
 						return "Export failed";

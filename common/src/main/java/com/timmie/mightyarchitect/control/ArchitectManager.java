@@ -30,7 +30,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.io.IOUtils;
@@ -171,14 +171,14 @@ public class ArchitectManager {
 		BlockPos pos = model.getAnchor()
 			.offset(((TemplateBlockAccess) model.getMaterializedSketch()).getBounds()
 				.getOrigin());
-		Component component = Component.literal("Deploy Schematic at: " + ChatFormatting.BLUE + "["
+		TextComponent component = new TextComponent("Deploy Schematic at: " + ChatFormatting.BLUE + "["
 			+ pos.getX() + "," + pos.getY() + "," + pos.getZ() + "]");
 		Minecraft.getInstance().player.displayClientMessage(component, false);
 		unload();
 	}
 
 	public static void status(String message) {
-		Minecraft.getInstance().player.displayClientMessage(Component.literal(message), true);
+		Minecraft.getInstance().player.displayClientMessage(new TextComponent(message), true);
 	}
 
 	public static void pickPalette() {

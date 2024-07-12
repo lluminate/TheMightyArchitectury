@@ -1,8 +1,11 @@
 package com.timmie.mightyarchitect.gui.widgets;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +13,16 @@ import java.util.List;
 public class SelectionScrollInput extends ScrollInput {
 
 	protected List<String> options;
-	protected Component scrollToSelect = Component.literal("Scroll to Select");
+	protected Component scrollToSelect = new TextComponent("Scroll to Select");
 
 	public SelectionScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
 		super(xIn, yIn, widthIn, heightIn);
 		options = new ArrayList<>();
+	}
+
+	@Override
+	public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
 	}
 
 	public ScrollInput forOptions(List<String> options) {
@@ -26,7 +34,7 @@ public class SelectionScrollInput extends ScrollInput {
 
 	@Override
 	protected void writeToLabel() {
-		displayLabel.text = Component.literal(options.get(state));
+		displayLabel.text = new TextComponent(options.get(state));
 	}
 
 	@Override
@@ -41,19 +49,23 @@ public class SelectionScrollInput extends ScrollInput {
 			.withStyle(ChatFormatting.BLUE));
 		for (int i = min; i < max; i++) {
 			if (i == state)
-				toolTip.add(Component.empty().plainCopy()
+				toolTip.add(new TextComponent("").plainCopy()
 					.append("-> ")
 					.append(options.get(i))
 					.withStyle(ChatFormatting.WHITE));
 			else
-				toolTip.add(Component.empty().plainCopy()
+				toolTip.add(new TextComponent("").plainCopy()
 					.append("> ")
 					.append(options.get(i))
 					.withStyle(ChatFormatting.GRAY));
 		}
-		toolTip.add(Component.empty().plainCopy()
+		toolTip.add(new TextComponent("").plainCopy()
 			.append(scrollToSelect)
 			.withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_GRAY));
 	}
 
+	@Override
+	public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+	}
 }

@@ -6,10 +6,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.AbortableIterationConsumer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -24,7 +22,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.level.storage.WritableLevelData;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.ticks.LevelTickAccess;
 
@@ -58,7 +55,7 @@ public class WrappedWorld extends Level {
 		}
 
 		@Override
-		public <U extends Entity> void get(EntityTypeTest<Entity, U> entityTypeTest, AbortableIterationConsumer<U> abortableIterationConsumer) {
+		public <U extends Entity> void get(EntityTypeTest<Entity, U> entityTypeTest, Consumer<U> consumer) {
 
 		}
 
@@ -68,14 +65,15 @@ public class WrappedWorld extends Level {
 		}
 
 		@Override
-		public <U extends Entity> void get(EntityTypeTest<Entity, U> entityTypeTest, AABB aABB, AbortableIterationConsumer<U> abortableIterationConsumer) {
+		public <U extends Entity> void get(EntityTypeTest<Entity, U> entityTypeTest, AABB aABB, Consumer<U> consumer) {
 
 		}
+
 	};
 
 	public WrappedWorld(Level world) {
-		super((WritableLevelData) world.getLevelData(), world.dimension(), world.registryAccess(), world.dimensionTypeRegistration(),
-			() -> world.getProfiler(), world.isClientSide, false, 0, 0);
+		super((WritableLevelData) world.getLevelData(), world.dimension(), world.dimensionTypeRegistration(),
+			() -> world.getProfiler(), world.isClientSide, false, 0);
 		this.world = world;
 	}
 
@@ -84,20 +82,6 @@ public class WrappedWorld extends Level {
 		return world.getBlockState(pos);
 	}
 
-	@Override
-	public void playSeededSound(@org.jetbrains.annotations.Nullable Player player, double d, double e, double f, Holder<SoundEvent> holder, SoundSource soundSource, float g, float h, long l) {
-
-	}
-
-	@Override
-	public void playSeededSound(@org.jetbrains.annotations.Nullable Player player, double d, double e, double f, SoundEvent soundEvent, SoundSource soundSource, float g, float h, long l) {
-
-	}
-
-	@Override
-	public void playSeededSound(@org.jetbrains.annotations.Nullable Player player, Entity entity, Holder<SoundEvent> holder, SoundSource soundSource, float f, float g, long l) {
-
-	}
 
 	@Override
 	public boolean isStateAtPosition(BlockPos p_217375_1_, Predicate<BlockState> p_217375_2_) {
@@ -137,10 +121,6 @@ public class WrappedWorld extends Level {
 	@Override
 	public void levelEvent(Player player, int type, BlockPos pos, int data) {}
 
-	@Override
-	public void gameEvent(GameEvent gameEvent, Vec3 vec3, GameEvent.Context context) {
-
-	}
 
 	@Override
 	public void gameEvent(@Nullable Entity p_151549_, GameEvent p_151550_, BlockPos p_151551_) {
@@ -215,11 +195,6 @@ public class WrappedWorld extends Level {
 	@Override
 	public RegistryAccess registryAccess() {
 		return world.registryAccess();
-	}
-
-	@Override
-	public FeatureFlagSet enabledFeatures() {
-		return null;
 	}
 
 	@Override

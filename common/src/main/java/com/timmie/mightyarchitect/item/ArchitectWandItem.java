@@ -14,6 +14,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -69,7 +70,7 @@ public class ArchitectWandItem extends Item {
 
 			String name = DesignExporter.exportDesign(world, anchor);
 			if (!name.isEmpty()) {
-				player.displayClientMessage(Component.literal(name), true);
+				player.displayClientMessage(new TextComponent(name), true);
 			}
 
 		} else {

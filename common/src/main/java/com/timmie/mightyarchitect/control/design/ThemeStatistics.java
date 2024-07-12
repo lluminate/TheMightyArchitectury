@@ -4,6 +4,7 @@ import com.timmie.mightyarchitect.control.compose.Room;
 import com.timmie.mightyarchitect.foundation.utility.DesignHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.Random;
 
@@ -177,7 +178,7 @@ public class ThemeStatistics {
 	}
 
 	private void chat(String message) {
-		Minecraft.getInstance().player.displayClientMessage(Component.literal(message), false);
+		Minecraft.getInstance().player.displayClientMessage(new TextComponent(message), false);
 	}
 
 	public DesignType fallbackRoof(Room room, boolean tower) {

@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 
 public class Label extends AbstractSimiWidget {
 
@@ -17,13 +18,13 @@ public class Label extends AbstractSimiWidget {
 	protected Font font;
 
 	public Label(int x, int y, String tooltip) {
-		this(x, y, Component.literal(tooltip));
+		this(x, y, new TextComponent(tooltip));
 	}
 	
 	public Label(int x, int y, Component text) {
 		super(x, y, Minecraft.getInstance().font.width(text), 10);
 		font = Minecraft.getInstance().font;
-		this.text = Component.literal("Label");
+		this.text = new TextComponent("Label");
 		color = 0xFFFFFF;
 		hasShadow = false;
 		suffix = "";
@@ -45,7 +46,7 @@ public class Label extends AbstractSimiWidget {
 	}
 	
 	public void setText(String text) {
-		this.text = Component.literal(text);
+		this.text = new TextComponent(text);
 	}
 
 	public void setTextAndTrim(Component newText, boolean trimFront, int maxWidthPx) {
@@ -67,8 +68,8 @@ public class Label extends AbstractSimiWidget {
 
 		for (int i = startIndex; i != endIndex; i += step) {
 			String sub = builder.substring(trimFront ? i : startIndex, trimFront ? endIndex + 1 : i + 1);
-			if (fontRenderer.width(Component.literal(sub).setStyle(newText.getStyle())) + trimWidth <= maxWidthPx) {
-				text = Component.literal(trimFront ? trim + sub : sub + trim).setStyle(newText.getStyle());
+			if (fontRenderer.width(new TextComponent(sub).setStyle(newText.getStyle())) + trimWidth <= maxWidthPx) {
+				text = new TextComponent(trimFront ? trim + sub : sub + trim).setStyle(newText.getStyle());
 				return;
 			}
 		}
@@ -94,13 +95,12 @@ public class Label extends AbstractSimiWidget {
 	}
 
 	@Override
-	public void renderWidget(PoseStack poseStack, int i, int j, float f) {
+	public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 
 	}
 
 	@Override
-	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-		defaultButtonNarrationText(narrationElementOutput);
-	}
+	public void updateNarration(NarrationElementOutput narrationElementOutput) {
 
+	}
 }

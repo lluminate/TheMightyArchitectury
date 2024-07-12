@@ -1,5 +1,7 @@
 package com.timmie.mightyarchitect.control;
 
+import com.timmie.mightyarchitect.MightyClient;
+
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -102,7 +104,9 @@ public class SchematicRenderer {
 						continue;
 
 					if (!buffers.containsKey(blockRenderLayer))
-						buffers.put(blockRenderLayer, new BufferBuilder(DefaultVertexFormat.BLOCK.getIntegerSize()));
+						{
+						buffers.put(blockRenderLayer, new BufferBuilder(MightyClient.irisEnabled?262144:DefaultVertexFormat.BLOCK.getIntegerSize()));
+						}
 
 					BufferBuilder bufferBuilder = buffers.get(blockRenderLayer);
 					if (startedBufferBuilders.add(blockRenderLayer))
@@ -124,8 +128,8 @@ public class SchematicRenderer {
 			if (!startedBufferBuilders.contains(layer))
 				continue;
 			BufferBuilder buf = buffers.get(layer);
-			var renderedBuffer = buf.end();
-			bufferCache.put(layer, new SuperByteBuffer(renderedBuffer));
+			buf.end();
+			bufferCache.put(layer, new SuperByteBuffer(buf));
 		}
 	}
 

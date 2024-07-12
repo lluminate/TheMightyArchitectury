@@ -6,7 +6,8 @@
   "description": "Architectury port of The Mighty Architect. Design elaborate buildings within a minute!",
   "authors": [
     "simibubi",
-    "timmie"
+    "timmie",
+    "victor"
   ],
   "contact": {
     "homepage": "https://github.com/simibubi/TheMightyArchitect",
@@ -22,7 +23,7 @@
   },
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.19.4",
-    "architectury": ">=8.1.79"
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.5.75"
   }
 }

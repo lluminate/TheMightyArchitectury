@@ -15,7 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
@@ -114,7 +114,7 @@ public abstract class ComposerToolBase implements IComposerTool {
 	}
 	
 	protected void status(String message) {
-		Minecraft.getInstance().player.displayClientMessage(Component.literal(message), true);
+		Minecraft.getInstance().player.displayClientMessage(new TextComponent(message), true);
 	}
 	
 }

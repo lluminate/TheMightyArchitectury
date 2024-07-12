@@ -13,10 +13,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.nio.file.Paths;
 
@@ -71,22 +70,22 @@ public class PalettePickerScreen extends AbstractSimiScreen {
 		// create
 		if (!scanPicker) {
 			buttonAddPalette = new IconButton(x + (i % 5) * 23, y + (i / 5) * 23, ScreenResources.ICON_ADD);
-			buttonAddPalette.setToolTip(Component.literal("Create Palette"));
+			buttonAddPalette.setToolTip(new TextComponent("Create Palette"));
 			buttonAddPalette.getToolTip()
-				.add(Component.literal("Will use currently selected").withStyle(ChatFormatting.GRAY));
+				.add(new TextComponent("Will use currently selected").withStyle(ChatFormatting.GRAY));
 			buttonAddPalette.getToolTip()
-				.add(Component.literal("Palette as the template.").withStyle(ChatFormatting.GRAY));
+				.add(new TextComponent("Palette as the template.").withStyle(ChatFormatting.GRAY));
 			i++;
 			widgets.add(buttonAddPalette);
 		}
 
 		buttonOpenFolder = new IconButton(x + (i % 5) * 23, y + (i / 5) * 23, ScreenResources.ICON_FOLDER);
-		buttonOpenFolder.setToolTip(Component.literal("Open Palette Folder"));
+		buttonOpenFolder.setToolTip(new TextComponent("Open Palette Folder"));
 		widgets.add(buttonOpenFolder);
 		i++;
 
 		buttonRefresh = new IconButton(x + (i % 5) * 23, y + (i / 5) * 23, ScreenResources.ICON_REFRESH);
-		buttonRefresh.setToolTip(Component.literal("Refresh Imported Palettes"));
+		buttonRefresh.setToolTip(new TextComponent("Refresh Imported Palettes"));
 		widgets.add(buttonRefresh);
 	}
 
@@ -97,11 +96,11 @@ public class PalettePickerScreen extends AbstractSimiScreen {
 		if (scanPicker) {
 			if (primary.palette.hasDuplicates())
 				minecraft.player.displayClientMessage(
-					Component.literal(ChatFormatting.RED + "Warning: Ambiguous Scanner Palette "
+					new TextComponent(ChatFormatting.RED + "Warning: Ambiguous Scanner Palette "
 						+ ChatFormatting.WHITE + "( " + primary.palette.getDuplicates() + " )"),
 					false);
 
-			minecraft.player.displayClientMessage(Component.literal("Updated Default Palette"), true);
+			minecraft.player.displayClientMessage(new TextComponent("Updated Default Palette"), true);
 			DesignExporter.theme.setDefaultPalette(primary.palette);
 			DesignExporter.theme.setDefaultSecondaryPalette(secondary.palette);
 		}
@@ -232,8 +231,6 @@ public class PalettePickerScreen extends AbstractSimiScreen {
 			this.palette = palette;
 			visible = true;
 			active = true;
-			var tooltipText = Component.literal(palette.getName());
-			this.setTooltip(Tooltip.create(tooltipText));
 		}
 
 		private void preview(PoseStack ms, Minecraft mc) {

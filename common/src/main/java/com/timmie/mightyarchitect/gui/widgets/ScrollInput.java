@@ -1,10 +1,12 @@
 package com.timmie.mightyarchitect.gui.widgets;
 
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.function.Consumer;
 
@@ -13,8 +15,8 @@ public class ScrollInput extends AbstractSimiWidget {
 	protected Consumer<Integer> onScroll;
 	protected int state;
 	protected Label displayLabel;
-	protected Component title = Component.literal("Choose an Option");
-	protected Component scrollToModify = Component.literal("Scroll to Modify");
+	protected Component title = new TextComponent("Choose an Option");
+	protected Component scrollToModify = new TextComponent("Scroll to Modify");
 	protected int min, max;
 	protected int shiftStep;
 
@@ -24,6 +26,11 @@ public class ScrollInput extends AbstractSimiWidget {
 		min = 0;
 		max = 1;
 		shiftStep = 5;
+	}
+
+	@Override
+	public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
 	}
 
 	public ScrollInput withRange(int min, int max) {
@@ -43,7 +50,7 @@ public class ScrollInput extends AbstractSimiWidget {
 	}
 
 	public ScrollInput titled(String title) {
-		this.title = Component.literal(title);
+		this.title = new TextComponent(title);
 		updateTooltip();
 		return this;
 	}
@@ -109,7 +116,7 @@ public class ScrollInput extends AbstractSimiWidget {
 	}
 
 	protected void writeToLabel() {
-		displayLabel.text = Component.literal(String.valueOf(state));
+		displayLabel.text = new TextComponent(String.valueOf(state));
 	}
 
 	protected void updateTooltip() {
@@ -120,14 +127,9 @@ public class ScrollInput extends AbstractSimiWidget {
 			.withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_GRAY));
 	}
 
-	@Override
-	public void renderWidget(PoseStack poseStack, int i, int j, float f) {
-
-	}
 
 	@Override
-	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-		defaultButtonNarrationText(narrationElementOutput);
-	}
+	public void updateNarration(NarrationElementOutput narrationElementOutput) {
 
+	}
 }

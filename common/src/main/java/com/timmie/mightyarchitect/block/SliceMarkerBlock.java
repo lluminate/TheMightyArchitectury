@@ -4,7 +4,7 @@ import com.timmie.mightyarchitect.AllItems;
 import com.timmie.mightyarchitect.control.design.DesignSlice.DesignSliceTrait;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -55,7 +55,7 @@ public class SliceMarkerBlock extends Block {
 		DesignSliceTrait currentTrait = state.getValue(VARIANT);
 		DesignSliceTrait newTrait = currentTrait.cycle(player.isShiftKeyDown() ? -1 : 1);
 		worldIn.setBlockAndUpdate(pos, state.setValue(VARIANT, newTrait));
-		player.displayClientMessage(Component.literal(newTrait.getDescription()), true);
+		player.displayClientMessage(new TextComponent(newTrait.getDescription()), true);
 
 		return InteractionResult.SUCCESS;
 	}

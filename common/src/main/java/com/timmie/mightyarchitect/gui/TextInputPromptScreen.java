@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
@@ -29,8 +29,8 @@ public class TextInputPromptScreen extends AbstractSimiScreen {
 		this.callback = callBack;
 		this.abortCallback = abortCallback;
 
-		buttonTextConfirm = Component.literal("Confirm");
-		buttonTextAbort = Component.literal("Abort");
+		buttonTextConfirm = new TextComponent("Confirm");
+		buttonTextAbort = new TextComponent("Abort");
 		confirmed = false;
 	}
 
@@ -40,22 +40,22 @@ public class TextInputPromptScreen extends AbstractSimiScreen {
 		setWindowSize(ScreenResources.TEXT_INPUT.width, ScreenResources.TEXT_INPUT.height + 30);
 
 		this.nameField =
-			new EditBox(font, topLeftX + 33, topLeftY + 26, 128, 8, Component.literal(""));
+			new EditBox(font, topLeftX + 33, topLeftY + 26, 128, 8, new TextComponent(""));
 		this.nameField.setTextColor(-1);
 		this.nameField.setTextColorUneditable(-1);
 		this.nameField.setBordered(false);
 		this.nameField.setMaxLength(35);
-		this.nameField.setFocused(true);
+		this.nameField.changeFocus(true);
 
-		confirm = Button.builder(buttonTextConfirm, button -> {
+		confirm = new Button(topLeftX -5, topLeftY + 50, 100, 20, buttonTextConfirm, button -> {
 			callback.accept(nameField.getValue());
 			confirmed = true;
 			minecraft.setScreen(null);
-		}).pos(topLeftX - 5, topLeftY + 50).size(100, 20).build();
+		});
 
-		abort = Button.builder(buttonTextAbort, button -> {
+		abort = new Button(topLeftX + 100, topLeftY + 50, 100, 20, buttonTextAbort, button -> {
 			minecraft.setScreen(null);
-		}).pos(topLeftX + 100, topLeftY + 50).size(100, 20).build();
+		});
 
 		widgets.add(confirm);
 		widgets.add(abort);
@@ -77,15 +77,15 @@ public class TextInputPromptScreen extends AbstractSimiScreen {
 	}
 
 	public void setButtonTextConfirm(String buttonTextConfirm) {
-		this.buttonTextConfirm = Component.literal(buttonTextConfirm);
+		this.buttonTextConfirm = new TextComponent(buttonTextConfirm);
 	}
 
 	public void setButtonTextAbort(String buttonTextAbort) {
-		this.buttonTextAbort = Component.literal(buttonTextAbort);
+		this.buttonTextAbort = new TextComponent(buttonTextAbort);
 	}
 
 	public void setTitle(String title) {
-		this.title = Component.literal(title);
+		this.title = new TextComponent(title);
 	}
 
 	@Override

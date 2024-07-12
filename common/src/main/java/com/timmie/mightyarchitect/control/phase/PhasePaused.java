@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ public class PhasePaused extends PhaseBase {
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (player == null)
 			return;
-		player.displayClientMessage(Component.literal(
+		player.displayClientMessage(new TextComponent(
 			"The Mighty Architect was " + ChatFormatting.BOLD + "Paused" + ChatFormatting.RESET + "."), false);
-		player.displayClientMessage(Component.literal("You can continue composing with [" + ChatFormatting.AQUA
+		player.displayClientMessage(new TextComponent("You can continue composing with [" + ChatFormatting.AQUA
 			+ MightyClient.COMPOSE.getTranslatedKeyMessage()
 				.getString()
 				.toUpperCase()

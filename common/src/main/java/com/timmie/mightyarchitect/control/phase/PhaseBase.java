@@ -4,6 +4,7 @@ import com.timmie.mightyarchitect.control.ArchitectManager;
 import com.timmie.mightyarchitect.control.Schematic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 public abstract class PhaseBase implements IArchitectPhase {
 
@@ -34,7 +35,7 @@ public abstract class PhaseBase implements IArchitectPhase {
 		if (message == null) 
 			return;
 		
-		minecraft.player.displayClientMessage(Component.literal(message), true);
+		minecraft.player.displayClientMessage(new TextComponent(message), true);
 	}
 
 	

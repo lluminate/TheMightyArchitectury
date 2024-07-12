@@ -5,6 +5,7 @@ import com.timmie.mightyarchitect.gui.widgets.AbstractSimiWidget;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class AbstractSimiScreen extends Screen {
 	protected List<AbstractWidget> widgets;
 
 	protected AbstractSimiScreen() {
-		super(Component.literal(""));
+		super(new TextComponent(""));
 		widgets = new ArrayList<>();
 	}
 

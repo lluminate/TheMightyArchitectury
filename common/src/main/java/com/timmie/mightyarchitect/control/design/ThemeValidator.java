@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,8 +19,8 @@ public class ThemeValidator {
 	public static void check(DesignTheme theme) {
 		LocalPlayer player = Minecraft.getInstance().player;
 		for (int i = 0; i < 3; i++)
-			player.displayClientMessage(Component.literal(" "), false);
-		player.displayClientMessage(Component.literal(ChatFormatting.AQUA + "--> Validation on "
+			player.displayClientMessage(new TextComponent(" "), false);
+		player.displayClientMessage(new TextComponent(ChatFormatting.AQUA + "--> Validation on "
 			+ ChatFormatting.BLUE + ChatFormatting.BOLD + theme.getDisplayName() + ChatFormatting.AQUA + " <--"),
 			false);
 		theme.clearDesigns();
@@ -142,18 +143,18 @@ public class ThemeValidator {
 
 		if (complaints.size() > 0) {
 			player.displayClientMessage(
-				Component.literal(ChatFormatting.GOLD + "The Following Designs are missing:"), false);
+				new TextComponent(ChatFormatting.GOLD + "The Following Designs are missing:"), false);
 			for (Component text : complaints) {
 				player.displayClientMessage(text, false);
 			}
 			player.displayClientMessage(
-				Component.literal(
+				new TextComponent(
 					ChatFormatting.GOLD + "Try and add these missing designs or exclude their type from your theme."),
 				false);
 
 		} else {
 			player.displayClientMessage(
-				Component.literal(ChatFormatting.GREEN + "For prior traits no missing designs have been found."),
+				new TextComponent(ChatFormatting.GREEN + "For prior traits no missing designs have been found."),
 				false);
 		}
 
@@ -164,7 +165,7 @@ public class ThemeValidator {
 	}
 
 	private static void alert(String message) {
-		complaints.add(Component.literal("-> " + ChatFormatting.RED + message));
+		complaints.add(new TextComponent("-> " + ChatFormatting.RED + message));
 	}
 
 	private static String glue(List<Integer> heights) {

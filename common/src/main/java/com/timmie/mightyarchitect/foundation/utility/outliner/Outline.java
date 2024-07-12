@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix3f;
+import com.mojang.math.Matrix3f;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

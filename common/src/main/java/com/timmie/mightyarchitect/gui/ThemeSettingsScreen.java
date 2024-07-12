@@ -9,7 +9,9 @@ import com.timmie.mightyarchitect.gui.widgets.Indicator.State;
 import com.timmie.mightyarchitect.gui.widgets.Label;
 import com.timmie.mightyarchitect.gui.widgets.ScrollInput;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +54,14 @@ public class ThemeSettingsScreen extends AbstractSimiScreen {
 		int y = topLeftY + 14;
 		int id = 0;
 
-		inputName = new EditBox(font, x, y, 104, 8, Component.literal(""));
+		inputName = new EditBox(font, x, y, 104, 8, new TextComponent(""));
 		inputName.setValue(theme.getDisplayName());
-		inputName.setFocused(false);
+		inputName.changeFocus(false);
 		inputs.add(inputName);
 
-		inputAuthor = new EditBox(font, x, y + 20, 104, 8, Component.literal(""));
+		inputAuthor = new EditBox(font, x, y + 20, 104, 8, new TextComponent(""));
 		inputAuthor.setValue(theme.getDesigner());
-		inputAuthor.setFocused(false);
+		inputAuthor.changeFocus(false);
 		inputs.add(inputAuthor);
 
 		inputs.forEach(input -> {
@@ -67,7 +69,7 @@ public class ThemeSettingsScreen extends AbstractSimiScreen {
 			input.setTextColorUneditable(-1);
 			input.setBordered(false);
 			input.setMaxLength(35);
-			input.setFocused(false);
+			input.changeFocus(false);
 		});
 
 		// init toggleButtons and indicators
@@ -78,16 +80,36 @@ public class ThemeSettingsScreen extends AbstractSimiScreen {
 		int indexShift = -id;
 
 		regular = id++ + indexShift;
-		IconButton button = new IconButton(x, y, ScreenResources.ICON_LAYER_REGULAR);
+		IconButton button = new IconButton(x, y, ScreenResources.ICON_LAYER_REGULAR) {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+		};
 		button.setToolTip("Regular Style [Always enabled]");
 		toggleButtons.add(button);
-		Indicator guiIndicator = new Indicator(x, y - 5, "");
+		Indicator guiIndicator = new Indicator(x, y - 5, "") {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+
+			@Override
+			public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+			}
+		};
 		guiIndicator.state = State.YELLOW;
 		indicators.add(guiIndicator);
 
 		x += 20;
 		foundation = id++ + indexShift;
-		button = new IconButton(x, y, ScreenResources.ICON_LAYER_FOUNDATION);
+		button = new IconButton(x, y, ScreenResources.ICON_LAYER_FOUNDATION) {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+		};
 		button.setToolTip("Foundation Style");
 		toggleButtons.add(button);
 		guiIndicator = new Indicator(x, y - 5, "");
@@ -327,7 +349,7 @@ public class ThemeSettingsScreen extends AbstractSimiScreen {
 		ThemeStorage.exportTheme(theme);
 		ThemeStorage.reloadExternal();
 		ArchitectManager.editTheme(theme);
-		minecraft.player.displayClientMessage(Component.literal("Theme settings have been updated."), true);
+		minecraft.player.displayClientMessage(new TextComponent("Theme settings have been updated."), true);
 	}
 
 	private boolean roofLayerExists() {

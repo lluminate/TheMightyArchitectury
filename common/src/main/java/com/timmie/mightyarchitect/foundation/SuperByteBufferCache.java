@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.levelgen.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
@@ -79,13 +79,13 @@ public class SuperByteBufferCache {
 		BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 		ModelBlockRenderer blockRenderer = dispatcher.getModelRenderer();
 		BufferBuilder builder = new BufferBuilder(DefaultVertexFormat.BLOCK.getIntegerSize());
-		RandomSource random = RandomSource.create();
+		Random random = new Random();
 		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
 		blockRenderer.tesselateBlock(Minecraft.getInstance().level, model, referenceState, BlockPos.ZERO.above(255), ms,
 				builder, true, random, 42, OverlayTexture.NO_OVERLAY);
-		var renderedBuilder = builder.end();
+		builder.end();
 
-		return new SuperByteBuffer(renderedBuilder);
+		return new SuperByteBuffer(builder);
 	}
 
 	public void invalidate() {

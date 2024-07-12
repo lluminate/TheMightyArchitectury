@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.FormattedCharSequence;
 import org.lwjgl.glfw.GLFW;
 
@@ -34,7 +35,7 @@ public class ArchitectMenuScreen extends Screen {
 	private LerpedFloat animation;
 
 	public ArchitectMenuScreen() {
-		super(Component.literal("Architect Menu"));
+		super(new TextComponent("Architect Menu"));
 		keybinds = new KeyBindList();
 		tooltip = new ArrayList<>();
 		title = "";
@@ -210,7 +211,7 @@ public class ArchitectMenuScreen extends Screen {
 		for (String text : tooltip) {
 			int height = mc.font.wordWrapHeight(text, menuWidth - 8);
 			int lineY = yPos;
-			for (FormattedCharSequence iro : textRenderer.split(Component.literal(text), menuWidth - 8)) {
+			for (FormattedCharSequence iro : textRenderer.split(new TextComponent(text), menuWidth - 8)) {
 				textRenderer.draw(ms, iro, xPos, lineY, 0xEEEEEE);
 				lineY += textRenderer.lineHeight;
 			}

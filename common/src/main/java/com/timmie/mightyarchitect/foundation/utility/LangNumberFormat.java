@@ -15,11 +15,8 @@ public class LangNumberFormat {
 	}
 
 	public void update() {
-		var langCode = Minecraft.getInstance().getLanguageManager().getSelected();
-		var langInfo = Minecraft.getInstance().getLanguageManager().getLanguage(langCode);
-		var minecraftLocale = new Locale(langInfo.name(), langInfo.region());
+		format = NumberFormat.getNumberInstance(Locale.ROOT);
 
-		format = NumberFormat.getInstance(minecraftLocale);
 		format.setMaximumFractionDigits(2);
 		format.setMinimumFractionDigits(0);
 		format.setGroupingUsed(true);

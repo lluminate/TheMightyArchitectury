@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class ToolSelectionScreen extends Screen {
 	protected int h;
 
 	public ToolSelectionScreen(List<Tools> tools, Consumer<Tools> callback) {
-		super(Component.literal("Tool Selection"));
+		super(new TextComponent("Tool Selection"));
 		this.minecraft = Minecraft.getInstance();
 		this.tools = tools;
 		this.callback = callback;

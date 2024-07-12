@@ -3,7 +3,7 @@ package com.timmie.mightyarchitect.networking;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,12 +28,11 @@ public class InstantPrintPacket {
 		Map<BlockPos, BlockState> blocks = new HashMap<>();
 
 		// for reading block state later
-		var holderGetter = Minecraft.getInstance().level.holderLookup(Registries.BLOCK);
 		int size = buf.readInt();
 		for (int i = 0; i < size; i++) {
 			CompoundTag blockTag = buf.readNbt();
 			BlockPos pos = buf.readBlockPos();
-			blocks.put(pos, NbtUtils.readBlockState(holderGetter, blockTag));
+			blocks.put(pos, NbtUtils.readBlockState(blockTag));
 		}
 		this.blocks = new BunchOfBlocks(blocks);
 	}

@@ -5,9 +5,20 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.timmie.mightyarchitect.gui.ScreenResources;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 public class Indicator extends AbstractSimiWidget {
-	
+
+	@Override
+	public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+	}
+
+	@Override
+	public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+	}
+
 	public enum State {
 		OFF, ON,
 		RED, YELLOW, GREEN;
@@ -16,7 +27,7 @@ public class Indicator extends AbstractSimiWidget {
 	public State state;
 	
 	public Indicator(int x, int y, String tooltip) {
-		this(x, y, Component.literal(tooltip));
+		this(x, y, new TextComponent(tooltip));
 	}
 	
 	public Indicator(int x, int y, Component tooltip) {
@@ -38,15 +49,4 @@ public class Indicator extends AbstractSimiWidget {
 		}
 		toDraw.draw(matrixStack, this, x, y);
 	}
-
-	@Override
-	public void renderWidget(PoseStack poseStack, int i, int j, float f) {
-
-	}
-
-	@Override
-	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-		defaultButtonNarrationText(narrationElementOutput);
-	}
-
 }

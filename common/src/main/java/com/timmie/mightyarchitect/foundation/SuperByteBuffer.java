@@ -1,11 +1,13 @@
 package com.timmie.mightyarchitect.foundation;
 
+import com.mojang.blaze3d.vertex.BufferBuilder.DrawState;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector4f;
+import com.mojang.datafixers.util.Pair;
+
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class SuperByteBuffer {
 
@@ -42,10 +45,23 @@ public class SuperByteBuffer {
 	private int r, g, b, a;
 	private float sheetSize;
 
-	public SuperByteBuffer(BufferBuilder.RenderedBuffer renderedBuffer) {
-		formatSize = renderedBuffer.drawState().format().getVertexSize();
+	public SuperByteBuffer(BufferBuilder renderedBuffer) {
 
-		template = renderedBuffer.vertexBuffer();
+		Pair<DrawState, ByteBuffer> state = renderedBuffer.popNextBuffer();
+		ByteBuffer byteBuffer = state.getSecond();
+		byteBuffer.order(ByteOrder.nativeOrder());
+
+		formatSize = renderedBuffer.format.getVertexSize();
+		int size = state.getFirst()
+				.vertexCount() * formatSize;
+
+
+		template = ByteBuffer.allocateDirect(size)
+				.order(ByteOrder.nativeOrder());
+		template.order(byteBuffer.order());
+		template.limit(byteBuffer.limit());
+		template.put(byteBuffer);
+		template.rewind();
 
 		transforms = new PoseStack();
 	}
@@ -70,7 +86,7 @@ public class SuperByteBuffer {
 			.pose());
 		Matrix4f localTransforms = transforms.last()
 			.pose();
-		t.mul(localTransforms);
+		t.multiply(localTransforms);
 
 		for (int i = 0; i < vertexCount(buffer); i++) {
 			float x = getX(buffer, i);
@@ -79,8 +95,8 @@ public class SuperByteBuffer {
 
 			Vector4f pos = new Vector4f(x, y, z, 1F);
 			Vector4f lightPos = new Vector4f(x, y, z, 1F);
-			pos.mul(t);
-			lightPos.mul(localTransforms);
+			pos.transform(t);
+			lightPos.transform(localTransforms);
 
 			builder.vertex(pos.x(), pos.y(), pos.z());
 
@@ -110,7 +126,7 @@ public class SuperByteBuffer {
 			if (shouldLight) {
 				int light = packedLightCoords;
 				if (lightTransform != null) {
-					lightPos.mul(lightTransform);
+					lightPos.transform(lightTransform);
 					light = getLight(Minecraft.getInstance().level, lightPos);
 				}
 				builder.uv2(light);
@@ -139,9 +155,8 @@ public class SuperByteBuffer {
 	public SuperByteBuffer rotate(Direction axis, float radians) {
 		if (radians == 0)
 			return this;
-		Quaternionf quaternionOfAxisRotation = new Quaternionf();
-		quaternionOfAxisRotation.fromAxisAngleRad(axis.step(), radians);
-		transforms.mulPose(quaternionOfAxisRotation);
+		transforms.mulPose(axis.step()
+				.rotation(radians));
 		return this;
 	}
 

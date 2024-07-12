@@ -3,7 +3,7 @@ package com.timmie.mightyarchitect.control.palette;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.Block;
@@ -123,15 +123,13 @@ public class PaletteDefinition {
 	public static PaletteDefinition fromNBT(CompoundTag compound) {
 		PaletteDefinition palette = defaultPalette().clone();
 
-		var holderGetter = Minecraft.getInstance().level.holderLookup(Registries.BLOCK);
-
 		if (compound != null) {
 			if (compound.contains("Palette")) {
 				CompoundTag paletteTag = compound.getCompound("Palette");
 				palette.name = paletteTag.getString("Name");
 				for (Palette key : Palette.values()) {
 					if (paletteTag.contains(key.name())) {
-						palette.put(key, NbtUtils.readBlockState(holderGetter, paletteTag.getCompound(key.name())));
+						palette.put(key, NbtUtils.readBlockState(paletteTag.getCompound(key.name())));
 					}
 				}
 			}

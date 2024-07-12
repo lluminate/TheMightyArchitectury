@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.timmie.mightyarchitect.gui.ScreenResources;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 public class IconButton extends AbstractSimiWidget {
 
@@ -44,13 +45,8 @@ public class IconButton extends AbstractSimiWidget {
 		this.pressed = false;
 	}
 
-	@Override
-	protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-		defaultButtonNarrationText(narrationElementOutput);
-	}
-
 	public void setToolTip(String text) {
-		setToolTip(Component.literal(text));
+		setToolTip(new TextComponent(text));
 	}
 
 	public void setToolTip(Component text) {
@@ -58,4 +54,8 @@ public class IconButton extends AbstractSimiWidget {
 		toolTip.add(text);
 	}
 
+	@Override
+	public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+	}
 }

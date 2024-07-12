@@ -9,6 +9,7 @@ import com.timmie.mightyarchitect.control.phase.export.PhaseEditTheme;
 import com.timmie.mightyarchitect.gui.widgets.Label;
 import com.timmie.mightyarchitect.gui.widgets.ScrollInput;
 import com.timmie.mightyarchitect.gui.widgets.SelectionScrollInput;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,50 @@ public class DesignExporterScreen extends AbstractSimiScreen {
 
 		additionalDataValue = DesignExporter.designParameter;
 
-		labelTheme = new Label(topLeftX + 96, topLeftY + 28, "").withShadow();
-		labelLayer = new Label(topLeftX + 96, topLeftY + 48, "").withShadow();
-		labelType = new Label(topLeftX + 96, topLeftY + 68, "").withShadow();
-		labelAdditionalData = new Label(topLeftX + 96, topLeftY + 88, "").withShadow();
+		labelTheme = new Label(topLeftX + 96, topLeftY + 28, "") {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+
+			@Override
+			public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+			}
+		}.withShadow();
+		labelLayer = new Label(topLeftX + 96, topLeftY + 48, "") {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+
+			@Override
+			public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+			}
+		}.withShadow();
+		labelType = new Label(topLeftX + 96, topLeftY + 68, "") {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+
+			@Override
+			public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+			}
+		}.withShadow();
+		labelAdditionalData = new Label(topLeftX + 96, topLeftY + 88, "") {
+			@Override
+			public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+			}
+
+			@Override
+			public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+			}
+		}.withShadow();
 
 		additionalDataKey = "";
 		initScrollAreas(theme, layer, type);
@@ -172,7 +213,17 @@ public class DesignExporterScreen extends AbstractSimiScreen {
 					int min = (type.getMinSize() - 1) / 2;
 					int max = (type.getMaxSize() - 1) / 2;
 
-					scrollAreaAdditionalData = new ScrollInput(topLeftX + 93, topLeftY + 85, 90, 14).withRange(min, max)
+					scrollAreaAdditionalData = new ScrollInput(topLeftX + 93, topLeftY + 85, 90, 14) {
+						@Override
+						public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+						}
+
+						@Override
+						public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+						}
+					}.withRange(min, max)
 						.setState((additionalDataValue - 1) / 2)
 						.writingTo(labelAdditionalData)
 						.calling(position -> {
@@ -186,7 +237,17 @@ public class DesignExporterScreen extends AbstractSimiScreen {
 					int max = type.getMaxSize();
 
 					scrollAreaAdditionalData =
-						new ScrollInput(topLeftX + 93, topLeftY + 85, 90, 14).withRange(min, max + 1)
+						new ScrollInput(topLeftX + 93, topLeftY + 85, 90, 14) {
+							@Override
+							public void updateNarration(NarrationElementOutput narrationElementOutput) {
+
+							}
+
+							@Override
+							public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+
+							}
+						}.withRange(min, max + 1)
 							.setState(additionalDataValue)
 							.writingTo(labelAdditionalData)
 							.calling(position -> {

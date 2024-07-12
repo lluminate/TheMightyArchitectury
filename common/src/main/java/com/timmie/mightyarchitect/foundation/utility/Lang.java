@@ -3,6 +3,7 @@ package com.timmie.mightyarchitect.foundation.utility;
 import com.timmie.mightyarchitect.TheMightyArchitect;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -29,7 +30,7 @@ public class Lang {
 	}
 
 	public static Component empty() {
-		return Component.empty();
+		return new TextComponent("");
 	}
 
 	//
