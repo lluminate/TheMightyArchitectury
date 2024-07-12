@@ -18,7 +18,6 @@ classes/
 .settings
 *.launch
 *.log
-common/.DS_Store
 .DS_Store
 *.log
 .architectury-transformer
